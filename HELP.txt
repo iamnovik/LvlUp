@@ -1,10 +1,4 @@
-Обновление последовательности
--- Создать новую последовательность с начальным значением 1
-CREATE SEQUENCE new_category_id_seq START 1;
--- Изменить столбец "category_id", чтобы он использовал новую последовательность
-ALTER TABLE "Category" ALTER COLUMN "category_id" SET DEFAULT nextval('new_category_id_seq');
--- Обновить существующие записи с новыми значениями "category_id"
-UPDATE "Category" SET "category_id" = nextval('new_category_id_seq');
+
 
 Выборка из одной таблицы по значению поля другой:
 SELECT p.*
