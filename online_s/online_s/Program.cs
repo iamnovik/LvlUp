@@ -1,105 +1,76 @@
 ﻿using System.Runtime.InteropServices;
 using Microsoft.EntityFrameworkCore;
 using online_s.ScaffDir;
-
-using (var dbContext = new Shop_DbContext())
+async Task<IEnumerable<Product>> GetAllProductsByBrand(ShopDbContext dbContext, Brand brand)
 {
-    //Update old data
-    /*var BrandToUpdate = new Brand()
-    {
-        BrandId = 1,
-        BrandName = "Arcteryx"
-    };
-    dbContext.Brands.Update(BrandToUpdate);
-    dbContext.SaveChanges();*/
-    //
-    
-    //Queries
-    var products = dbContext.Products.Include(p => p.ProductBrand) // Если вы хотите получить информацию о бренде
-        .Where(p => p.ProductBrand.BrandName == "B")
-        .ToList();
+    var products = await dbContext.Products
+        .Include(p => p.ProductBrand)
+        .Where(p => p.ProductBrand.BrandName == brand.BrandName)
+        .ToListAsync(); // Use ToListAsync for asynchronous execution
 
-    foreach (var product in products)
-    {
-        Console.WriteLine($"Product ID: {product.ProductId}, Product Name: {product.ProductName}");
-    }
-    
-    var brandProductCounts = dbContext.Brands
-        .GroupJoin(
-            dbContext.Products,
-            b => b.BrandId,
-            p => p.ProductBrandId,
-            (brand, products) => new
-            {
-                BrandName = brand.BrandName,
-                NumProducts = products.Count()
-            }
-        )
-        .OrderByDescending(result => result.NumProducts)
-        .ToList();
-
-    foreach (var result in brandProductCounts)
-    {
-        Console.WriteLine($"Brand: {result.BrandName}, Number of Products: {result.NumProducts}");
-    }
-    
-    var query = from m in dbContext.M2mProductSizeColors
-        join p in dbContext.Products on m.M2mPscProductId equals p.ProductId
-        join b in dbContext.Brands on p.ProductBrandId equals b.BrandId
-        where b.BrandName == "B"
-        select new
-        {
-            M2MProductSizeColor = m,
-            Product = p,
-            Brand = b
-        };
-
-    var results = query.ToList();
-
-    foreach (var result in results)
-    {
-        Console.WriteLine($"M2M_Product_Size_Color ID: {result.M2MProductSizeColor.M2mPscId}");
-        //Console.WriteLine($"Size {0}, Color {1}",result.M2MProductSizeColor.M2mPscSize.SizeName,result.M2MProductSizeColor.M2mPscColor.ColorName);
-        Console.WriteLine($"Product Name: {result.Product.ProductName}");
-        Console.WriteLine($"Brand Name: {result.Brand.BrandName}");
-    }
-    
-    var query2 = from p in dbContext.Products
-        join m in dbContext.M2mSectionCategories on p.ProductCategoryId equals m.M2mSectionCategoryCategoryId
-        join s in dbContext.Sections on m.M2mSectionCategorySectionId equals s.SectionId
-        join c in dbContext.Categories on m.M2mSectionCategoryCategoryId equals c.CategoryId
-        where s.SectionName == "Man" && c.CategoryName == "Sneakers"
-        select p.ProductBrand.BrandName;
-    var results2 = query2.ToList();
-    foreach (var productName in results2)
-    {
-        Console.WriteLine($"Product Name: {productName}");
-    }
-    var query3 = from r in dbContext.Reviews
-        join u in dbContext.Users on r.ReviewUserId equals u.UserId
-        join p in dbContext.Products on r.ReviewProductId equals p.ProductId
-        where p.ProductName == "B"
-        select r;
-    var results3 = query3.ToList();
-    foreach (var result in results3)
-    {
-        Console.WriteLine($"Rating: {result.ReviewRating}, Comment: {result.ReviewComment}");
-        Console.WriteLine($"UserID: {result.ReviewUserId},ReviewID: {result.ReviewId}");
-    }
-
-    var timeOrders = from o in dbContext.Orders.OrderByDescending(o => o.OrderTimeCreate)
-        join m in dbContext.M2mOrderProducts on o.OrderId equals m.M2mOrderProductOrderId
-        join psc in dbContext.M2mProductSizeColors on m.M2mOrderProductProductId equals psc.M2mPscId
-        where psc.M2mPscProductId == 34 && o.OrderStatus == 1
-        select o;
-    var results4 = timeOrders.ToList();
-    foreach (var result in results4)
-    {
-        Console.WriteLine($"OrderID: {result.OrderId}, Adress: {result.OrderAddress}");
-        Console.WriteLine($"UserID: {result.OrderUserId},ReviewID: {result.OrderPrice}");
-    }
-
-
-
-
+    return products;
 }
+async Task<Dictionary<Brand, int>> GetBrandProductCounts(ShopDbContext dbContext)
+{
+    var brands =await dbContext.Brands.Include(b => b.Products).ToListAsync();
+    var dict = new Dictionary<Brand, int>();
+    foreach (var item in brands)
+    {
+        dict.Add(item,item.Products.Count);
+    }
+
+    return dict;
+}
+
+async Task<IEnumerable<M2mProductSizeColor>> GetProductVariants(ShopDbContext dbContext, long pId)
+{
+    return (await dbContext.Products
+            .Where(p => p.ProductId == pId)
+            .Include(p => p.M2mProductSizeColors)
+            .FirstAsync())
+        .M2mProductSizeColors
+        .OrderBy(p => p.M2mPscProduct.ProductName)
+        .ToList();
+}
+
+async Task<IEnumerable<Product>> GetProductBySectionAndCategory(ShopDbContext dbContext, long sectionId,
+    long categoryId)
+{
+    var results = await dbContext.Products
+        .Join(dbContext.M2mSectionCategories, p => p.ProductCategoryId, m => m.M2mSectionCategoryCategoryId, (p, m) => new { Product = p, M2mSectionCategory = m })
+        .Join(dbContext.Sections, pm => pm.M2mSectionCategory.M2mSectionCategorySectionId, s => s.SectionId, (pm, s) => new { pm.Product, pm.M2mSectionCategory, Section = s })
+        .Join(dbContext.Categories, pms => pms.M2mSectionCategory.M2mSectionCategoryCategoryId, c => c.CategoryId, (pms, c) => new { pms.Product, pms.M2mSectionCategory, pms.Section, Category = c })
+        .Where(result => result.Section.SectionId == sectionId && result.Category.CategoryId == categoryId)
+        .Select(result => result.Product)
+        .ToListAsync();
+
+    return results;
+    
+}
+async Task<IEnumerable<Review>> GetReviewsByProductName(ShopDbContext dbContext, string productName)
+{ 
+    var reviews = await dbContext.Products.Include(p => p.Reviews).FirstOrDefaultAsync(p => p.ProductName == productName);
+    if (reviews != null)
+    {
+        return reviews.Reviews;
+    }
+    return   Enumerable.Empty<Review>();
+}
+async Task<IEnumerable<Order>> GetOrdersByProductAndStatus(ShopDbContext dbContext, int productId, int orderStatus)
+{
+    
+    var results = await dbContext.Orders
+        .OrderByDescending(o => o.OrderTimeCreate)
+        .Join(dbContext.M2mOrderProducts, o => o.OrderId, m => m.M2mOrderProductOrderId, (o, m) => new { Order = o, OrderProduct = m })
+        .Join(dbContext.M2mProductSizeColors, om => om.OrderProduct.M2mOrderProductProductId, psc => psc.M2mPscId, (om, psc) => new { om.Order, om.OrderProduct, ProductSizeColor = psc })
+        .Where(result => result.ProductSizeColor.M2mPscProductId == productId && result.Order.OrderStatus == orderStatus)
+        .Select(result => result.Order)
+        .ToListAsync();
+
+    return results;
+}
+
+
+
+
+

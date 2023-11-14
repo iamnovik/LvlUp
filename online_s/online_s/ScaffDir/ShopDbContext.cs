@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace online_s.ScaffDir;
 
-public partial class Shop_DbContext : DbContext
+public partial class ShopDbContext : DbContext
 {
-    public Shop_DbContext()
+    public ShopDbContext()
     {
     }
 
-    public Shop_DbContext(DbContextOptions<Shop_DbContext> options)
+    public ShopDbContext(DbContextOptions<ShopDbContext> options)
         : base(options)
     {
     }

@@ -10,7 +10,7 @@ using online_s.ScaffDir;
 
 namespace online_s.Migrations
 {
-    [DbContext(typeof(Shop_DbContext))]
+    [DbContext(typeof(ShopDbContext))]
     partial class Shop_DbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

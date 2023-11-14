@@ -11,7 +11,7 @@ using online_s.ScaffDir;
 
 namespace online_s.Migrations
 {
-    [DbContext(typeof(Shop_DbContext))]
+    [DbContext(typeof(ShopDbContext))]
     [Migration("20231101155846_InitialCreate")]
     partial class InitialCreate
     {
