@@ -26,29 +26,29 @@ public class Program
         return dict;
     }
 
-    async Task<IEnumerable<M2mProductSizeColor>> GetProductVariants(ShopDbContext dbContext, long pId)
+    async Task<IEnumerable<ProductVariant>> GetProductVariants(ShopDbContext dbContext, long pId)
     {
         return (await dbContext.Products
                 .Where(p => p.ProductId == pId)
-                .Include(p => p.M2mProductSizeColors)
+                .Include(p => p.ProductVariants)
                 .FirstAsync())
-            .M2mProductSizeColors
-            .OrderBy(p => p.M2mPscProduct.ProductName)
+            .ProductVariants
+            .OrderBy(p => p.pvProduct.ProductName)
             .ToList();
     }
 
     async Task<IEnumerable<Product>> GetProductBySectionAndCategory(ShopDbContext dbContext, long sectionId,
         long categoryId)
     {
-        var results = await dbContext.Products
+        /*var results = await dbContext.Products
             .Join(dbContext.M2mSectionCategories, p => p.ProductCategoryId, m => m.M2mSectionCategoryCategoryId, (p, m) => new { Product = p, M2mSectionCategory = m })
             .Join(dbContext.Sections, pm => pm.M2mSectionCategory.M2mSectionCategorySectionId, s => s.SectionId, (pm, s) => new { pm.Product, pm.M2mSectionCategory, Section = s })
             .Join(dbContext.Categories, pms => pms.M2mSectionCategory.M2mSectionCategoryCategoryId, c => c.CategoryId, (pms, c) => new { pms.Product, pms.M2mSectionCategory, pms.Section, Category = c })
             .Where(result => result.Section.SectionId == sectionId && result.Category.CategoryId == categoryId)
             .Select(result => result.Product)
             .ToListAsync();
-
-        return results;
+        */
+        return null;
 
     }
     async Task<IEnumerable<Review>> GetReviewsByProductName(ShopDbContext dbContext, string productName)
@@ -65,9 +65,9 @@ public class Program
 
         var results = await dbContext.Orders
             .OrderByDescending(o => o.OrderTimeCreate)
-            .Join(dbContext.M2mOrderProducts, o => o.OrderId, m => m.M2mOrderProductOrderId, (o, m) => new { Order = o, OrderProduct = m })
-            .Join(dbContext.M2mProductSizeColors, om => om.OrderProduct.M2mOrderProductProductId, psc => psc.M2mPscId, (om, psc) => new { om.Order, om.OrderProduct, ProductSizeColor = psc })
-            .Where(result => result.ProductSizeColor.M2mPscProductId == productId && result.Order.OrderStatus == orderStatus)
+            .Join(dbContext.M2mOrderProducts, o => o.OrderId, m => m.OrderProductOrderId, (o, m) => new { Order = o, OrderProduct = m })
+            .Join(dbContext.ProductVariants, om => om.OrderProduct.OrderProductProductId, psc => psc.pvId, (om, psc) => new { om.Order, om.OrderProduct, ProductSizeColor = psc })
+            .Where(result => result.ProductSizeColor.pvProductId == productId && result.Order.OrderStatus == orderStatus)
             .Select(result => result.Order)
             .ToListAsync();
 

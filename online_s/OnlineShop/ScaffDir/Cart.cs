@@ -11,7 +11,7 @@ public partial class Cart
 
     public short? CartQuantity { get; set; }
 
-    public virtual M2mProductSizeColor CartProduct { get; set; } = null!;
+    public virtual ProductVariant CartProduct { get; set; } = null!;
 
     public virtual User CartUser { get; set; } = null!;
 }

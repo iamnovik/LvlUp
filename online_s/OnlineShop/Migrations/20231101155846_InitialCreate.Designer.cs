@@ -49,7 +49,7 @@ namespace online_s.Migrations
 
             modelBuilder.HasSequence("user_user_id_seq");
 
-            modelBuilder.Entity("online_s.ScaffDir.Adress", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Adress", b =>
                 {
                     b.Property<long>("AddressId")
                         .ValueGeneratedOnAdd()
@@ -74,7 +74,7 @@ namespace online_s.Migrations
                     b.ToTable("Adress", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Brand", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Brand", b =>
                 {
                     b.Property<long>("BrandId")
                         .ValueGeneratedOnAdd()
@@ -92,7 +92,7 @@ namespace online_s.Migrations
                     b.ToTable("Brand", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Cart", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Cart", b =>
                 {
                     b.Property<long>("CartUserId")
                         .ValueGeneratedOnAdd()
@@ -118,7 +118,7 @@ namespace online_s.Migrations
                     b.ToTable("Cart", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Category", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Category", b =>
                 {
                     b.Property<long>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -142,7 +142,7 @@ namespace online_s.Migrations
                     b.ToTable("Category", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Color", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Color", b =>
                 {
                     b.Property<short>("ColorId")
                         .ValueGeneratedOnAdd()
@@ -160,7 +160,7 @@ namespace online_s.Migrations
                     b.ToTable("Color", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.M2mOrderProduct", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.M2mOrderProduct", b =>
                 {
                     b.Property<long>("M2mOrderProductOrderId")
                         .HasColumnType("bigint")
@@ -182,7 +182,7 @@ namespace online_s.Migrations
                     b.ToTable("M2M_order_product", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.M2mProductSizeColor", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.M2mProductSizeColor", b =>
                 {
                     b.Property<long>("M2mPscId")
                         .ValueGeneratedOnAdd()
@@ -217,7 +217,7 @@ namespace online_s.Migrations
                     b.ToTable("M2M_Product_Size_Color", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.M2mSectionCategory", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.M2mSectionCategory", b =>
                 {
                     b.Property<long>("M2mSectionCategoryCategoryId")
                         .HasColumnType("bigint")
@@ -234,7 +234,7 @@ namespace online_s.Migrations
                     b.ToTable("M2M_section_category", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Order", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Order", b =>
                 {
                     b.Property<long>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -271,7 +271,7 @@ namespace online_s.Migrations
                     b.ToTable("Order", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Product", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Product", b =>
                 {
                     b.Property<long>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -305,7 +305,7 @@ namespace online_s.Migrations
                     b.ToTable("Product", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Review", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Review", b =>
                 {
                     b.Property<long>("ReviewId")
                         .ValueGeneratedOnAdd()
@@ -339,7 +339,7 @@ namespace online_s.Migrations
                     b.ToTable("Review", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Section", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Section", b =>
                 {
                     b.Property<long>("SectionId")
                         .ValueGeneratedOnAdd()
@@ -357,7 +357,7 @@ namespace online_s.Migrations
                     b.ToTable("Section", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Size", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Size", b =>
                 {
                     b.Property<int>("SizeId")
                         .ValueGeneratedOnAdd()
@@ -376,7 +376,7 @@ namespace online_s.Migrations
                     b.ToTable("Size", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.User", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.User", b =>
                 {
                     b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
@@ -419,9 +419,9 @@ namespace online_s.Migrations
                     b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Adress", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Adress", b =>
                 {
-                    b.HasOne("online_s.ScaffDir.User", "AddressUser")
+                    b.HasOne("OnlineShop.ScaffDir.User", "AddressUser")
                         .WithMany("Adresses")
                         .HasForeignKey("AddressUserId")
                         .IsRequired()
@@ -430,15 +430,15 @@ namespace online_s.Migrations
                     b.Navigation("AddressUser");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Cart", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Cart", b =>
                 {
-                    b.HasOne("online_s.ScaffDir.M2mProductSizeColor", "CartProduct")
+                    b.HasOne("OnlineShop.ScaffDir.M2mProductSizeColor", "CartProduct")
                         .WithMany("Carts")
                         .HasForeignKey("CartProductId")
                         .IsRequired()
                         .HasConstraintName("FK_Cart_M2M_Product_Size_Color");
 
-                    b.HasOne("online_s.ScaffDir.User", "CartUser")
+                    b.HasOne("OnlineShop.ScaffDir.User", "CartUser")
                         .WithMany("Carts")
                         .HasForeignKey("CartUserId")
                         .IsRequired()
@@ -449,9 +449,9 @@ namespace online_s.Migrations
                     b.Navigation("CartUser");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Category", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Category", b =>
                 {
-                    b.HasOne("online_s.ScaffDir.Category", "CategorySubcategory")
+                    b.HasOne("OnlineShop.ScaffDir.Category", "CategorySubcategory")
                         .WithMany("InverseCategorySubcategory")
                         .HasForeignKey("CategorySubcategoryId")
                         .HasConstraintName("FK_Category_Category");
@@ -459,15 +459,15 @@ namespace online_s.Migrations
                     b.Navigation("CategorySubcategory");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.M2mOrderProduct", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.M2mOrderProduct", b =>
                 {
-                    b.HasOne("online_s.ScaffDir.Order", "M2mOrderProductOrder")
+                    b.HasOne("OnlineShop.ScaffDir.Order", "M2mOrderProductOrder")
                         .WithMany()
                         .HasForeignKey("M2mOrderProductOrderId")
                         .IsRequired()
                         .HasConstraintName("FK_M2M_order_product_Order");
 
-                    b.HasOne("online_s.ScaffDir.M2mProductSizeColor", "M2mOrderProductProduct")
+                    b.HasOne("OnlineShop.ScaffDir.M2mProductSizeColor", "M2mOrderProductProduct")
                         .WithMany()
                         .HasForeignKey("M2mOrderProductProductId")
                         .IsRequired()
@@ -478,21 +478,21 @@ namespace online_s.Migrations
                     b.Navigation("M2mOrderProductProduct");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.M2mProductSizeColor", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.M2mProductSizeColor", b =>
                 {
-                    b.HasOne("online_s.ScaffDir.Color", "M2mPscColor")
+                    b.HasOne("OnlineShop.ScaffDir.Color", "M2mPscColor")
                         .WithMany("M2mProductSizeColors")
                         .HasForeignKey("M2mPscColorId")
                         .IsRequired()
                         .HasConstraintName("FK_M2M_Product_Size_Color_Color");
 
-                    b.HasOne("online_s.ScaffDir.Product", "M2mPscProduct")
+                    b.HasOne("OnlineShop.ScaffDir.Product", "M2mPscProduct")
                         .WithMany("M2mProductSizeColors")
                         .HasForeignKey("M2mPscProductId")
                         .IsRequired()
                         .HasConstraintName("FK_M2M_Product_Size_Color_Product");
 
-                    b.HasOne("online_s.ScaffDir.Size", "M2mPscSize")
+                    b.HasOne("OnlineShop.ScaffDir.Size", "M2mPscSize")
                         .WithMany("M2mProductSizeColors")
                         .HasForeignKey("M2mPscSizeId")
                         .IsRequired()
@@ -505,15 +505,15 @@ namespace online_s.Migrations
                     b.Navigation("M2mPscSize");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.M2mSectionCategory", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.M2mSectionCategory", b =>
                 {
-                    b.HasOne("online_s.ScaffDir.Category", "M2mSectionCategoryCategory")
+                    b.HasOne("OnlineShop.ScaffDir.Category", "M2mSectionCategoryCategory")
                         .WithMany()
                         .HasForeignKey("M2mSectionCategoryCategoryId")
                         .IsRequired()
                         .HasConstraintName("FK_M2M_section_category_Category");
 
-                    b.HasOne("online_s.ScaffDir.Section", "M2mSectionCategorySection")
+                    b.HasOne("OnlineShop.ScaffDir.Section", "M2mSectionCategorySection")
                         .WithMany()
                         .HasForeignKey("M2mSectionCategorySectionId")
                         .IsRequired()
@@ -524,15 +524,15 @@ namespace online_s.Migrations
                     b.Navigation("M2mSectionCategorySection");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Order", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Order", b =>
                 {
-                    b.HasOne("online_s.ScaffDir.Adress", "OrderAddress")
+                    b.HasOne("OnlineShop.ScaffDir.Adress", "OrderAddress")
                         .WithMany("Orders")
                         .HasForeignKey("OrderAddressId")
                         .IsRequired()
                         .HasConstraintName("FK_Order_Adress");
 
-                    b.HasOne("online_s.ScaffDir.User", "OrderUser")
+                    b.HasOne("OnlineShop.ScaffDir.User", "OrderUser")
                         .WithMany("Orders")
                         .HasForeignKey("OrderUserId")
                         .IsRequired()
@@ -543,15 +543,15 @@ namespace online_s.Migrations
                     b.Navigation("OrderUser");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Product", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Product", b =>
                 {
-                    b.HasOne("online_s.ScaffDir.Brand", "ProductBrand")
+                    b.HasOne("OnlineShop.ScaffDir.Brand", "ProductBrand")
                         .WithMany("Products")
                         .HasForeignKey("ProductBrandId")
                         .IsRequired()
                         .HasConstraintName("FK_Product_Brand");
 
-                    b.HasOne("online_s.ScaffDir.Category", "ProductCategory")
+                    b.HasOne("OnlineShop.ScaffDir.Category", "ProductCategory")
                         .WithMany("Products")
                         .HasForeignKey("ProductCategoryId")
                         .IsRequired()
@@ -562,15 +562,15 @@ namespace online_s.Migrations
                     b.Navigation("ProductCategory");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Review", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Review", b =>
                 {
-                    b.HasOne("online_s.ScaffDir.Product", "ReviewProduct")
+                    b.HasOne("OnlineShop.ScaffDir.Product", "ReviewProduct")
                         .WithMany("Reviews")
                         .HasForeignKey("ReviewProductId")
                         .IsRequired()
                         .HasConstraintName("FK_Review_Product");
 
-                    b.HasOne("online_s.ScaffDir.User", "ReviewUser")
+                    b.HasOne("OnlineShop.ScaffDir.User", "ReviewUser")
                         .WithMany("Reviews")
                         .HasForeignKey("ReviewUserId")
                         .IsRequired()
@@ -581,46 +581,46 @@ namespace online_s.Migrations
                     b.Navigation("ReviewUser");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Adress", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Adress", b =>
                 {
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Brand", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Brand", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Category", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Category", b =>
                 {
                     b.Navigation("InverseCategorySubcategory");
 
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Color", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Color", b =>
                 {
                     b.Navigation("M2mProductSizeColors");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.M2mProductSizeColor", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.M2mProductSizeColor", b =>
                 {
                     b.Navigation("Carts");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Product", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Product", b =>
                 {
                     b.Navigation("M2mProductSizeColors");
 
                     b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.Size", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.Size", b =>
                 {
                     b.Navigation("M2mProductSizeColors");
                 });
 
-            modelBuilder.Entity("online_s.ScaffDir.User", b =>
+            modelBuilder.Entity("OnlineShop.ScaffDir.User", b =>
                 {
                     b.Navigation("Adresses");
 

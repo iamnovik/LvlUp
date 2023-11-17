@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "online_s", "online_s\online_s.csproj", "{9353C1AB-8F7A-4F13-85FA-D968DFECF484}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShop", "OnlineShop\OnlineShop.csproj", "{9353C1AB-8F7A-4F13-85FA-D968DFECF484}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

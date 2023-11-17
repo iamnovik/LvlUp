@@ -9,5 +9,5 @@ public partial class Size
 
     public string SizeName { get; set; } = null!;
 
-    public virtual ICollection<M2mProductSizeColor> M2mProductSizeColors { get; set; } = new List<M2mProductSizeColor>();
+    public virtual ICollection<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
 }
