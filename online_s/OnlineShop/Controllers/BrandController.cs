@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using online_s.ScaffDir;
+
 namespace online_s.Controllers;
 
+[Route("api/brands")]
+[ApiController]
 public class BrandController : ControllerBase
 {
     private readonly ShopDbContext _context;
@@ -38,7 +41,7 @@ public class BrandController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<Brand>> CreateBrand([FromBody] Brand newBrand)
+    public async Task<ActionResult<Brand>> CreateBrand( Brand newBrand)
     {
         if (!ModelState.IsValid)
         {
@@ -52,7 +55,7 @@ public class BrandController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateBrand(int id, [FromBody] Brand updatedBrand)
+    public async Task<IActionResult> UpdateBrand(int id, Brand updatedBrand)
     {
         if (!ModelState.IsValid)
         {
