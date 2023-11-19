@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using online_s.ScaffDir;
+using OnlineShop.Models.ScaffDir;
 
 #nullable disable
 
-namespace online_s.Migrations
+namespace OnlineShop.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
     [Migration("20231101155846_InitialCreate")]

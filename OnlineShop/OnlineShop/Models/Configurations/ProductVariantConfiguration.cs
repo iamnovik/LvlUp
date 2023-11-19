@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using online_s.ScaffDir;
+using OnlineShop.Models.ScaffDir;
 
 namespace online_s.Configurations;
 
@@ -10,35 +10,31 @@ public class ProductVariantConfiguration : IEntityTypeConfiguration<ProductVaria
     {
         entity.HasKey(e => e.pvId);
 
-        entity.ToTable("ProductVariant");
+        entity.HasIndex(e => e.pvColorId);
 
-        entity.HasIndex(e => e.pvColorId, "IXFK_ProductVariant_Color");
+        entity.HasIndex(e => e.pvProductId);
 
-        entity.HasIndex(e => e.pvProductId, "IXFK_ProductVariant_Product");
-
-        entity.HasIndex(e => e.pvSizeId, "IXFK_ProductVariant_Size");
+        entity.HasIndex(e => e.pvSizeId);
 
         entity.Property(e => e.pvId)
-            .HasDefaultValueSql("nextval(('\"productvariant_pv_id_seq\"'::text)::regclass)")
-            .HasColumnName("pv_sec_id");
-        entity.Property(e => e.pvId).HasColumnName("pv_id");
-        entity.Property(e => e.pvProductId).HasColumnName("pv_product_id");
-        entity.Property(e => e.pvQuantity).HasColumnName("pv_quantity");
-        entity.Property(e => e.pvSizeId).HasColumnName("pv_size_id");
+            .UseIdentityColumn()
+            .IsRequired();
+        
+        entity.Property(e => e.pvId);
+        entity.Property(e => e.pvProductId);
+        entity.Property(e => e.pvQuantity);
+        entity.Property(e => e.pvSizeId);
 
         entity.HasOne(d => d.pvColor).WithMany(p => p.ProductVariants)
             .HasForeignKey(d => d.pvColorId)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_ProductVariant_Color");
+            .OnDelete(DeleteBehavior.ClientSetNull);
 
         entity.HasOne(d => d.pvProduct).WithMany(p => p.ProductVariants)
             .HasForeignKey(d => d.pvProductId)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_ProductVariant_Product");
+            .OnDelete(DeleteBehavior.ClientSetNull);
 
         entity.HasOne(d => d.pvSize).WithMany(p => p.ProductVariants)
             .HasForeignKey(d => d.pvSizeId)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_ProductVariant_Size");
+            .OnDelete(DeleteBehavior.ClientSetNull);
     }
 }

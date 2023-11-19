@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace online_s.ScaffDir;
+﻿
+namespace OnlineShop.Models.ScaffDir;
 
 public partial class Adress
 {

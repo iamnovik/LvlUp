@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using online_s.ScaffDir;
+using OnlineShop.Models.ScaffDir;
 
 namespace online_s.Configurations;
 
@@ -8,13 +8,10 @@ public class SizeConfiguration : IEntityTypeConfiguration<Size>
 {
     public void Configure(EntityTypeBuilder<Size> entity)
     {
-        entity.ToTable("Size");
-
         entity.Property(e => e.SizeId)
-            .HasDefaultValueSql("nextval(('\"size_size_id_seq\"'::text)::regclass)")
-            .HasColumnName("size_id");
+            .UseIdentityColumn()
+            .IsRequired();
         entity.Property(e => e.SizeName)
-            .HasMaxLength(50)
-            .HasColumnName("size_name");
+            .HasMaxLength(50);
     }
 }

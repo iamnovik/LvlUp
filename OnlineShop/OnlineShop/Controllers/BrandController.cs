@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using online_s.ScaffDir;
+using OnlineShop.Models.ScaffDir;
 
-namespace online_s.Controllers;
+namespace OnlineShop.Controllers;
 
 [Route("api/brands")]
 [ApiController]

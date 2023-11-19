@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using online_s.ScaffDir;
+using OnlineShop.Models.ScaffDir;
 
-namespace online_s.Validators;
+namespace OnlineShop.Validators;
 
 public class BrandValidator : AbstractValidator<Brand>
 {

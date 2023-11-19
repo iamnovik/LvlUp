@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using online_s.Configurations;
 
-namespace online_s.ScaffDir;
+namespace OnlineShop.Models.ScaffDir;
 
 public partial class ShopDbContext : DbContext
 {
@@ -44,31 +43,7 @@ public partial class ShopDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new AdressConfiguration());
-
-        modelBuilder.ApplyConfiguration(new BrandConfiguration());
-
-        modelBuilder.ApplyConfiguration(new CartConfiguration());
-
-        modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-
-        modelBuilder.ApplyConfiguration(new ColorConfiguration());
-
-        modelBuilder.ApplyConfiguration(new OrderProductConfiguration());
-
-        modelBuilder.ApplyConfiguration(new ProductVariantConfiguration());
-
-        modelBuilder.ApplyConfiguration(new OrderConfiguration());
-
-        modelBuilder.ApplyConfiguration(new ProductConfiguration());
-
-        modelBuilder.ApplyConfiguration(new ReviewConfiguration());
-
-        modelBuilder.ApplyConfiguration(new SectionConfiguration());
-
-        modelBuilder.ApplyConfiguration(new SizeConfiguration());
-
-        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         
         modelBuilder.HasSequence("adress_address_id_seq");
         modelBuilder.HasSequence("brand_brand_id_seq");

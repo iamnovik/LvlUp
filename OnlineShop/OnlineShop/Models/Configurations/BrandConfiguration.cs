@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using online_s.ScaffDir;
+using OnlineShop.Models.ScaffDir;
 
 namespace online_s.Configurations;
 
@@ -8,13 +8,10 @@ public class BrandConfiguration : IEntityTypeConfiguration<Brand>
 {
     public void Configure(EntityTypeBuilder<Brand> entity)
     {
-        entity.ToTable("Brand");
-
         entity.Property(e => e.BrandId)
-            .HasDefaultValueSql("nextval(('\"brand_brand_id_seq\"'::text)::regclass)")
-            .HasColumnName("brand_id");
+            .UseIdentityColumn()
+            .IsRequired();
         entity.Property(e => e.BrandName)
-            .HasMaxLength(50)
-            .HasColumnName("brand_name");
+            .HasMaxLength(50);
     }
 }

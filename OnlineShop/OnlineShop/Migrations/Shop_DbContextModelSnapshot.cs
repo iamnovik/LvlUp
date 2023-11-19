@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using online_s.ScaffDir;
+using OnlineShop.Models.ScaffDir;
 
 #nullable disable
 
-namespace online_s.Migrations
+namespace OnlineShop.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
     partial class Shop_DbContextModelSnapshot : ModelSnapshot

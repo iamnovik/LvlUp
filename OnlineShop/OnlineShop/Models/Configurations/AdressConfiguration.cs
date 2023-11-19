@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using online_s.ScaffDir;
+using online_s.Configurations;
+using OnlineShop.Models.ScaffDir;
 
-namespace online_s.Configurations;
+namespace OnlineShop.Models.Configurations;
 
 public class AdressConfiguration : IEntityTypeConfiguration<Adress>
 {
@@ -10,23 +11,21 @@ public class AdressConfiguration : IEntityTypeConfiguration<Adress>
     public void Configure(EntityTypeBuilder<Adress> entity)
     {
         entity.HasKey(e => e.AddressId);
-
-        entity.ToTable("Adress");
-
-        entity.HasIndex(e => e.AddressUserId, "IXFK_Adress_User");
-
+        
+        entity.HasIndex(e => e.AddressUserId);
+        
         entity.Property(e => e.AddressId)
-            .HasDefaultValueSql("nextval(('\"adress_address_id_seq\"'::text)::regclass)")
-            .HasColumnName("address_id");
+            .UseIdentityColumn()
+            .IsRequired();
+        
         entity.Property(e => e.AddressAddress)
             .HasMaxLength(50)
-            .HasColumnName("address_address");
-        entity.Property(e => e.AddressUserId).HasColumnName("address_user_id");
+            .HasColumnName(nameof(Adress.AddressAddress));
+        entity.Property(e => e.AddressUserId).HasColumnName(nameof(Adress.AddressUserId));
 
         entity.HasOne(d => d.AddressUser).WithMany(p => p.Adresses)
             .HasForeignKey(d => d.AddressUserId)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_Adress_User");
+            .OnDelete(DeleteBehavior.ClientSetNull);
         
     }
 }
