@@ -2,15 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Models.ScaffDir;
 using OnlineShop.Validators;
-using WebApplication = Microsoft.AspNetCore.Builder.WebApplication;
-using WebApplicationBuilder = Microsoft.AspNetCore.Builder.WebApplicationBuilder;
 namespace OnlineShop;
 
 public class Program
 {
     public static void Main(String[] args)
     {
-        WebApplicationBuilder builder = WebApplication.CreateBuilder();
+        var builder = WebApplication.CreateBuilder(args);
         
         var connection = builder.Configuration.GetConnectionString("DefaultConnection");
         builder.Services.AddDbContext<ShopDbContext>(options => options.UseNpgsql(connection));
@@ -18,10 +16,23 @@ public class Program
         builder.Services.AddControllers()
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<BrandValidator>());
         
-        WebApplication app = builder.Build();
+        var app = builder.Build();
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseExceptionHandler("/Error");
+            app.UseHsts();
+        }
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+
         app.UseRouting();
-        app.Map("/", () => "Index Page");
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
         app.Run();
+        
 
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineShop.Models.ScaffDir;
 
-namespace online_s.Configurations;
+namespace OnlineShop.Models.Configurations;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
@@ -13,15 +13,19 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired();
         
         entity.Property(e => e.UserEmail)
-            .HasMaxLength(50);
+            .HasMaxLength(50).IsRequired();
         entity.Property(e => e.UserFirstname)
-            .HasMaxLength(50);
+            .HasMaxLength(50).IsRequired();
         entity.Property(e => e.UserLastname)
-            .HasMaxLength(50);
+            .HasMaxLength(50).IsRequired();
         entity.Property(e => e.UserPassword)
-            .HasMaxLength(50);
+            .HasMaxLength(50).IsRequired();
         entity.Property(e => e.UserPhoneNumber)
-            .HasMaxLength(50);
-        entity.Property(e => e.UserType);
+            .HasMaxLength(50).IsRequired();
+        entity.Property(e => e.UserType)
+            .IsRequired().IsRequired();
+
+        entity.HasIndex(e => e.UserEmail)
+            .IsUnique();
     }
 }

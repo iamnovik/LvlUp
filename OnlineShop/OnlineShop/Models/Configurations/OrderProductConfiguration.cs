@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineShop.Models.ScaffDir;
 
-namespace online_s.Configurations;
+namespace OnlineShop.Models.Configurations;
 
 public class OrderProductConfiguration : IEntityTypeConfiguration<OrderProduct>
 {
@@ -12,17 +12,19 @@ public class OrderProductConfiguration : IEntityTypeConfiguration<OrderProduct>
         
         entity.HasIndex(e => e.OrderProductOrderId);
         
-        entity.Property(e => e.OrderProductOrderId);
-        entity.Property(e => e.OrderProductProductId);
+        entity.Property(e => e.OrderProductOrderId)
+            .IsRequired();
+        entity.Property(e => e.OrderProductProductId)
+            .IsRequired();
         entity.Property(e => e.OrderProductQuantity)
-            .HasMaxLength(50);
-        
+            .IsRequired();
+
         entity.HasOne(d => d.OrderProductOrder).WithMany()
             .HasForeignKey(d => d.OrderProductOrderId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.Cascade);
         
         entity.HasOne(d => d.ProductVariants).WithMany()
             .HasForeignKey(d => d.OrderProductProductId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

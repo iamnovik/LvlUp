@@ -1,20 +1,20 @@
 ﻿namespace OnlineShop.Models.ScaffDir;
 
-public partial class User
+public class User
 {
     public long UserId { get; set; }
 
-    public short UserType { get; set; }
+    public UserType UserType { get; set; }
 
-    public string? UserEmail { get; set; }
+    public string UserEmail { get; set; } = null!;
 
     public string UserPassword { get; set; } = null!;
 
-    public string? UserFirstname { get; set; }
+    public string UserFirstname { get; set; } = null!;
 
-    public string? UserLastname { get; set; }
+    public string UserLastname { get; set; } = null!;
 
-    public string? UserPhoneNumber { get; set; }
+    public string UserPhoneNumber { get; set; } = null!;
 
     public virtual ICollection<Adress> Adresses { get; set; } = new List<Adress>();
 

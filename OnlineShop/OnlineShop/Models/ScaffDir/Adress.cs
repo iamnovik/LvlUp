@@ -1,9 +1,9 @@
 ﻿
 namespace OnlineShop.Models.ScaffDir;
 
-public partial class Adress
+public class Adress
 {
-    public long AddressId { get; set; }
+    public long AddressId { get; set; } 
 
     public long AddressUserId { get; set; }
 

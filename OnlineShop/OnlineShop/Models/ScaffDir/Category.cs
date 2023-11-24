@@ -1,12 +1,12 @@
 ﻿namespace OnlineShop.Models.ScaffDir;
 
-public partial class Category
+public class Category
 {
     public long CategoryId { get; set; }
 
     public long? CategorySubcategoryId { get; set; }
 
-    public string? CategoryName { get; set; }
+    public string CategoryName { get; set; } = null!;
 
     public virtual Category? CategorySubcategory { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace OnlineShop.Models.ScaffDir;
 
-public partial class ProductVariant
+public class ProductVariant
 {
     public long pvId { get; set; }
 
@@ -10,7 +10,7 @@ public partial class ProductVariant
 
     public short pvColorId { get; set; }
 
-    public int? pvQuantity { get; set; }
+    public int pvQuantity { get; set; }
 
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 

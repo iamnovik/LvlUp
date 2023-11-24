@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using online_s.Configurations;
 using OnlineShop.Models.ScaffDir;
 
 namespace OnlineShop.Models.Configurations;
@@ -19,13 +18,13 @@ public class AdressConfiguration : IEntityTypeConfiguration<Adress>
             .IsRequired();
         
         entity.Property(e => e.AddressAddress)
-            .HasMaxLength(50)
-            .HasColumnName(nameof(Adress.AddressAddress));
-        entity.Property(e => e.AddressUserId).HasColumnName(nameof(Adress.AddressUserId));
+            .HasMaxLength(50);
+        entity.Property(e => e.AddressUserId)
+            .IsRequired();
 
         entity.HasOne(d => d.AddressUser).WithMany(p => p.Adresses)
             .HasForeignKey(d => d.AddressUserId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.Cascade);
         
     }
 }

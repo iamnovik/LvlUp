@@ -1,6 +1,6 @@
 ﻿namespace OnlineShop.Models.ScaffDir;
 
-public partial class Size
+public class Size
 {
     public int SizeId { get; set; }
 

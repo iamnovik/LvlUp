@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineShop.Models.ScaffDir;
 
-namespace online_s.Configurations;
+namespace OnlineShop.Models.Configurations;
 
 public class ProductVariantConfiguration : IEntityTypeConfiguration<ProductVariant>
 {
@@ -21,20 +21,25 @@ public class ProductVariantConfiguration : IEntityTypeConfiguration<ProductVaria
             .IsRequired();
         
         entity.Property(e => e.pvId);
-        entity.Property(e => e.pvProductId);
-        entity.Property(e => e.pvQuantity);
-        entity.Property(e => e.pvSizeId);
+        entity.Property(e => e.pvProductId)
+            .IsRequired();
+        entity.Property(e => e.pvQuantity)
+            .IsRequired();
+        entity.Property(e => e.pvSizeId)
+            .IsRequired();
+        entity.Property(e => e.pvColorId)
+            .IsRequired();
 
         entity.HasOne(d => d.pvColor).WithMany(p => p.ProductVariants)
             .HasForeignKey(d => d.pvColorId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.Cascade);
 
         entity.HasOne(d => d.pvProduct).WithMany(p => p.ProductVariants)
             .HasForeignKey(d => d.pvProductId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.Cascade);
 
         entity.HasOne(d => d.pvSize).WithMany(p => p.ProductVariants)
             .HasForeignKey(d => d.pvSizeId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

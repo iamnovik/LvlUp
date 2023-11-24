@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineShop.Models.ScaffDir;
 
-namespace online_s.Configurations;
+namespace OnlineShop.Models.Configurations;
 
 public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
@@ -15,14 +15,17 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .IsRequired();
         
         entity.Property(e => e.CategoryName)
-            .HasMaxLength(50);
+            .HasMaxLength(50).IsRequired();
+        entity.HasIndex(e => e.CategoryName)
+            .IsUnique();
+        
         entity.Property(e => e.CategorySubcategoryId);
 
         entity.HasOne(d => d.CategorySubcategory).WithMany(p => p.InverseCategorySubcategory)
             .HasForeignKey(d => d.CategorySubcategoryId);
-        
+
         entity.HasMany(c => c.Sections)
-            .WithMany(s => s.Categories)
-            .UsingEntity(j => j.ToTable("M2M_Sections_Categories"));
+            .WithMany(s => s.Categories);
+
     }
 }

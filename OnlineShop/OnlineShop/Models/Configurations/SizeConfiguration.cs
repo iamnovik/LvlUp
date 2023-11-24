@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineShop.Models.ScaffDir;
 
-namespace online_s.Configurations;
+namespace OnlineShop.Models.Configurations;
 
 public class SizeConfiguration : IEntityTypeConfiguration<Size>
 {
@@ -12,6 +12,8 @@ public class SizeConfiguration : IEntityTypeConfiguration<Size>
             .UseIdentityColumn()
             .IsRequired();
         entity.Property(e => e.SizeName)
-            .HasMaxLength(50);
+            .HasMaxLength(50).IsRequired();
+        entity.HasIndex(e => e.SizeName)
+            .IsUnique();
     }
 }

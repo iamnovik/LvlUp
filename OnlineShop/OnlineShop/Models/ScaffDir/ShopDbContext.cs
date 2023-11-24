@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using online_s.Configurations;
 
 namespace OnlineShop.Models.ScaffDir;
 
@@ -44,22 +43,7 @@ public partial class ShopDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        
-        modelBuilder.HasSequence("adress_address_id_seq");
-        modelBuilder.HasSequence("brand_brand_id_seq");
-        modelBuilder.HasSequence("cart_cart_user_id_seq");
-        modelBuilder.HasSequence("category_category_id_seq");
-        modelBuilder.HasSequence("color_color_id_seq");
-        modelBuilder.HasSequence("productvariant_pv_id_seq");
-        modelBuilder.HasSequence("order_order_id_seq");
-        modelBuilder.HasSequence("product_product_id_seq");
-        modelBuilder.HasSequence("review_review_id_seq");
-        modelBuilder.HasSequence("section_section_id_seq");
-        modelBuilder.HasSequence("size_size_id_seq");
-        modelBuilder.HasSequence("user_user_id_seq");
-
-        OnModelCreatingPartial(modelBuilder);
+        modelBuilder.HasPostgresEnum<UserType>();
+        modelBuilder.HasPostgresEnum<OrderStatus>();
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

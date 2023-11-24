@@ -28,7 +28,7 @@ public class BrandController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<ActionResult<Brand>> GetBrand(int id)
+    public async Task<ActionResult<Brand>> GetBrand([FromRoute]int id)
     {
         var brand = await _context.Brands.FindAsync(id);
 
@@ -41,7 +41,7 @@ public class BrandController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<Brand>> CreateBrand( Brand newBrand)
+    public async Task<ActionResult<Brand>> CreateBrand( [FromBody]Brand newBrand)
     {
         if (!ModelState.IsValid)
         {
@@ -55,7 +55,7 @@ public class BrandController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateBrand(int id, Brand updatedBrand)
+    public async Task<IActionResult> UpdateBrand([FromRoute]int id, [FromBody] Brand updatedBrand)
     {
         if (!ModelState.IsValid)
         {
@@ -76,7 +76,7 @@ public class BrandController : ControllerBase
     }
     
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteBrand(int id)
+    public async Task<IActionResult> DeleteBrand([FromRoute]int id)
     {
         var brand = await _context.Brands.FindAsync(id);
         if (brand == null)

@@ -1,14 +1,14 @@
 ﻿namespace OnlineShop.Models.ScaffDir;
 
-public partial class Product
+public class Product
 {
     public long ProductId { get; set; }
 
-    public string? ProductName { get; set; }
+    public string ProductName { get; set; } = null!;
 
-    public long ProductBrandId { get; set; }
+    public long ProductBrandId { get; set; } 
 
-    public long ProductCategoryId { get; set; }
+    public long? ProductCategoryId { get; set; }
 
     public decimal ProductPrice { get; set; }
 

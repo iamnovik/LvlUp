@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineShop.Models.ScaffDir;
 
-namespace online_s.Configurations;
+namespace OnlineShop.Models.Configurations;
 
 public class CartConfiguration : IEntityTypeConfiguration<Cart>
 {
@@ -16,15 +16,17 @@ public class CartConfiguration : IEntityTypeConfiguration<Cart>
         entity.HasIndex(e => e.CartUserId);
         
         
-        entity.Property(e => e.CartProductId);
-        entity.Property(e => e.CartQuantity);
+        entity.Property(e => e.CartProductId)
+            .IsRequired();
+        entity.Property(e => e.CartQuantity)
+            .IsRequired();
         
         entity.HasOne(d => d.CartProduct).WithMany(p => p.Carts)
             .HasForeignKey(d => d.CartProductId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.Cascade);
         
         entity.HasOne(d => d.CartUser).WithMany(p => p.Carts)
             .HasForeignKey(d => d.CartUserId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -1,9 +1,8 @@
-﻿using System.Collections.Specialized;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineShop.Models.ScaffDir;
 
-namespace online_s.Configurations;
+namespace OnlineShop.Models.Configurations;
 
 public class SectionConfiguration : IEntityTypeConfiguration<Section>
 {
@@ -13,6 +12,8 @@ public class SectionConfiguration : IEntityTypeConfiguration<Section>
             .UseIdentityColumn()
             .IsRequired();
         entity.Property(e => e.SectionName)
-            .HasMaxLength(50);
+            .HasMaxLength(50).IsRequired();
+        entity.HasIndex(e => e.SectionName)
+            .IsUnique();
     }
 }

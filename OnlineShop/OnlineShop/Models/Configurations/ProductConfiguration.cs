@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineShop.Models.ScaffDir;
 
-namespace online_s.Configurations;
+namespace OnlineShop.Models.Configurations;
 
 public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
@@ -16,16 +16,19 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .UseIdentityColumn()
             .IsRequired();
         
-        entity.Property(e => e.ProductBrandId);
-        entity.Property(e => e.ProductCategoryId);
+        entity.Property(e => e.ProductBrandId)
+            .IsRequired();
+        entity.Property(e => e.ProductCategoryId)
+            .IsRequired();
         entity.Property(e => e.ProductName)
-            .HasMaxLength(50);
+            .HasMaxLength(50).IsRequired();
         entity.Property(e => e.ProductPrice)
-            .HasColumnType("money");
-        
+            .HasColumnType("money").IsRequired();
+
+        entity.HasIndex(e => e.ProductName);
         entity.HasOne(d => d.ProductBrand).WithMany(p => p.Products)
             .HasForeignKey(d => d.ProductBrandId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.Cascade);
         
         entity.HasOne(d => d.ProductCategory).WithMany(p => p.Products)
             .HasForeignKey(d => d.ProductCategoryId)
