@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OnlineShop.Models.ScaffDir;
+using OnlineShop.Domain.Entity;
 
-namespace OnlineShop.Controllers;
+namespace OnlineShop.Web.Controllers;
 
 [Route("api/brands")]
 [ApiController]
@@ -14,7 +14,7 @@ public class BrandController : ControllerBase
     {
         _context = context;
     }
-
+    
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Brand>>> GetBrands()
     {
